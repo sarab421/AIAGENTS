@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard - NHS Portal</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7fa;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #007bff;
+    }
+
+    section {
+      background: white;
+      padding: 20px;
+      margin-top: 20px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Welcome to NHS Dashboard</h1>
+
+  <!-- Section 1: Patient Records -->
+  <section id="patient-section" class="hidden">
+    <h2>Patient Records</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>DOB</th>
+          <th>Address</th>
+          <th>Medication</th>
+          <th>Test Type</th>
+          <th>Test Status</th>
+          <th>Test Result</th>
+          <th>Appointment Status</th>
+          <th>Appointment Date & Time</th>
+          <th>Doctor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Kamran Aslam</td>
+          <td>09-06-1980</td>
+          <td>70 London Road, Slough</td>
+          <td>Amoxicillin 500mg</td>
+          <td>Blood Test</td>
+          <td>Ready</td>
+          <td>Normal</td>
+          <td>Booked</td>
+          <td>22nd May 2025 at 2:30pm</td>
+          <td>Dr. Sarah Brown</td>
+        </tr>
+        <tr>
+          <td>Alice Johnson</td>
+          <td>20-08-1975</td>
+          <td>789 Oak Avenue, Manchester</td>
+          <td>Ibuprofen 200mg</td>
+          <td>COVID-19 PCR</td>
+          <td>Pending</td>
+          <td>–</td>
+          <td>Booked</td>
+          <td>23rd May 2025 at 10:00am</td>
+          <td>Dr. Emily Davis</td>
+        </tr>
+        <tr>
+          <td>Bob Smith</td>
+          <td>15-05-1980</td>
+          <td>456 Pine Road, London</td>
+          <td>–</td>
+          <td>–</td>
+          <td>–</td>
+          <td>–</td>
+          <td>Not Booked</td>
+          <td>–</td>
+          <td>–</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  
+  <!-- Section 2: Doctor Availability -->
+  <section id="doctor-section" class="hidden">
+    <h2>Doctor Availability</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Doctor Name</th>
+          <th>Available</th>
+          <th>Available Time Slots</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Dr. Sarah Brown</td>
+          <td>Yes</td>
+          <td>22nd May 2025 at 2:30pm, 22nd May 2025 at 3:00pm</td>
+          <td>mindmetainfo@gmail.com</td>
+        </tr>
+        <tr>
+          <td>Dr. John Smith</td>
+          <td>No</td>
+          <td>-</td>
+          <td>johnsmith@gmail.com</td>
+        </tr>
+        <tr>
+          <td>Dr. Emily Davis</td>
+          <td>Yes</td>
+          <td>23rd May 2025 at 10:00am, 23rd May 2025 at 11:00am</td>
+          <td>mindmetainfo@gmail.com</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  
+  <!-- Section 3: Doctor's Slots (days as columns) -->
+  <section id="slots-section" class="hidden">
+    <h2>Doctor's Slots</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Doctor Name</th>
+          <th>Monday</th>
+          <th>Tuesday</th>
+          <th>Wednesday</th>
+          <th>Thursday</th>
+          <th>Friday</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Dr. Sarah Brown</td>
+          <td>10:00-10:30, 10:30-11:00, 03:00-03:30</td>
+          <td>12:00-12:30</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <td>Dr. Emily Davis</td>
+          <td>-</td>
+          <td>-</td>
+          <td>11:00-11:30, 01:00-01:30</td>
+          <td>-</td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <td>Dr. John Smith</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>09:00-09:30</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+
+</body>
+
+</html>
