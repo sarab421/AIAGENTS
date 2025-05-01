@@ -4,25 +4,47 @@
 <head>
   <meta charset="UTF-8">
   <title>Dashboard - NHS Portal</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f7fa;
-      padding: 20px;
-    }
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f4f7fa;
+    padding: 20px;
+  }
 
-    h1 {
-      color: #007bff;
-    }
+  h1 {
+    color: #007bff;
+  }
+  .add_space{
+    width: 10%;
+  }
 
-    section {
-      background: white;
-      padding: 20px;
-      margin-top: 20px;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
-    }
-  </style>
+  section {
+    background: white;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 10px;
+  }
+
+  th,
+  td {
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    background-color: #fdfdfd;
+  }
+
+  th {
+    background-color: #f0f0f0;
+    text-align: left;
+  }
+</style>
+
 </head>
 
 <body>
@@ -36,7 +58,7 @@
       <thead>
         <tr>
           <th>Name</th>
-          <th>DOB</th>
+          <th class="add_space">DOB</th>
           <th>Address</th>
           <th>Medication</th>
           <th>Test Type</th>
@@ -50,7 +72,7 @@
       <tbody>
         <tr>
           <td>Kamran Aslam</td>
-          <td>09-06-1980</td>
+          <td class="add_space">09-06-1980</td>
           <td>70 London Road, Slough</td>
           <td>Amoxicillin 500mg</td>
           <td>Blood Test</td>
@@ -62,7 +84,7 @@
         </tr>
         <tr>
           <td>Alice Johnson</td>
-          <td>20-08-1975</td>
+          <td class="add_space">20-08-1975</td>
           <td>789 Oak Avenue, Manchester</td>
           <td>Ibuprofen 200mg</td>
           <td>COVID-19 PCR</td>
@@ -74,7 +96,7 @@
         </tr>
         <tr>
           <td>Bob Smith</td>
-          <td>15-05-1980</td>
+          <td class="add_space">15-05-1980</td>
           <td>456 Pine Road, London</td>
           <td>–</td>
           <td>–</td>
