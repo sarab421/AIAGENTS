@@ -25,7 +25,7 @@
             display: block;
             width: 100%;
             padding: 12px;
-            margin-bottom: 15px;
+            margin-top: 15px;
             font-size: 16px;
             background: #007bff;
             color: white;
@@ -34,7 +34,22 @@
             cursor: pointer;
         }
 
-        .doctor-list {
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .doctor-list,
+        #calendar,
+        #formStep {
             display: none;
             margin-top: 20px;
         }
@@ -101,7 +116,6 @@
         }
 
         .next-button {
-            display: none;
             margin-top: 20px;
             width: 100%;
             padding: 10px;
@@ -112,46 +126,79 @@
             font-size: 16px;
             cursor: pointer;
         }
-
-        #calendar {
-            display: none;
-        }
     </style>
 </head>
 
 <body>
 
     <div class="booking-container">
-        <button class="button" onclick="showDoctors()">Book Now</button>
+        <button class="button" onclick="showForm()">Book Now</button>
 
+        <!-- Step 1: Form -->
+        <div id="formStep">
+            <div class="form-group">
+                <label for="username">Your Name</label>
+                <input type="text" id="username" placeholder="John Doe">
+            </div>
+            <div class="form-group">
+                <label for="dob">Date of Birth</label>
+                <input type="date" id="dob">
+            </div>
+            <div class="form-group">
+                <label for="reason">Reason for Booking</label>
+                <select id="reason">
+                    <option value="checkup">Checkup</option>
+                    <option value="consultation">Consultation</option>
+                    <option value="followup">Follow-up</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="you@example.com">
+            </div>
+            <button class="next-button" onclick="formNext()">Next</button>
+        </div>
+
+        <!-- Step 2: Doctor Selection -->
         <div class="doctor-list" id="doctorList">
             <div class="doctor-option" onclick="selectDoctor('Dr. Sarab Brown')">Dr. Sarab Brown</div>
             <div class="doctor-option" onclick="selectDoctor('Dr. Nate')">Dr. Nate</div>
             <div class="doctor-option" onclick="selectDoctor('Dr. Sarab')">Dr. Sarab</div>
         </div>
 
+        <!-- Step 3: Calendar & Time -->
         <div id="calendar">
             <h3 id="selectedDoctor">Select a Date (May 2025)</h3>
             <div class="horizontal-scroll" id="dateScroll"></div>
-
             <div class="time-slots" id="timeSlots"></div>
-            <button class="next-button" id="nextBtn" onclick="bookingDone()">Next</button>
+            <button class="next-button" id="finalNextBtn" onclick="booking_done()">Done</button>
         </div>
     </div>
 
     <script>
+        function booking_done() {
+            window.location.href = "booking_done.html";
+        }
         const doctorList = document.getElementById('doctorList');
         const calendar = document.getElementById('calendar');
         const dateScroll = document.getElementById('dateScroll');
         const timeSlotsContainer = document.getElementById('timeSlots');
-        const nextBtn = document.getElementById('nextBtn');
+        const finalNextBtn = document.getElementById('finalNextBtn');
         const selectedDoctorHeading = document.getElementById('selectedDoctor');
+        const formStep = document.getElementById('formStep');
 
         const timeSlots = ['14:35', '14:40', '14:45', '14:50', '14:55', '15:00', '15:05', '15:10', '15:15'];
 
         let selectedSlot = null;
 
-        function showDoctors() {
+        function showForm() {
+            formStep.style.display = 'block';
+        }
+
+        function formNext() {
+            // You can add validation here
+            formStep.style.display = 'none';
             doctorList.style.display = 'block';
         }
 
@@ -161,14 +208,11 @@
             calendar.style.display = 'block';
             renderDates();
         }
-        function bookingDone() {
-            window.location.href = "mock.html";
-        }
 
         function generateMayDates() {
             const mayDates = [];
             const year = 2025;
-            const month = 4; // May
+            const month = 4; // May (0-indexed)
             const daysInMonth = 31;
 
             for (let day = 1; day <= daysInMonth; day++) {
@@ -199,7 +243,7 @@
         function renderTimeSlots(date) {
             timeSlotsContainer.innerHTML = '';
             selectedSlot = null;
-            nextBtn.style.display = 'none';
+            finalNextBtn.style.display = 'none';
 
             timeSlots.forEach(slot => {
                 const div = document.createElement('div');
@@ -209,7 +253,7 @@
                     document.querySelectorAll('.slot').forEach(el => el.classList.remove('selected'));
                     div.classList.add('selected');
                     selectedSlot = slot;
-                    nextBtn.style.display = 'block';
+                    finalNextBtn.style.display = 'block';
                 };
                 timeSlotsContainer.appendChild(div);
             });
