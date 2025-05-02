@@ -128,14 +128,13 @@
         }
     </style>
 </head>
-
 <body>
 
     <div class="booking-container">
         <button class="button" onclick="showForm()">Book Now</button>
 
         <!-- Step 1: Form -->
-        <div id="formStep">
+        <div id="formStep" style="display:none;">
             <div class="form-group">
                 <label for="username">Your Name</label>
                 <input type="text" id="username" placeholder="John Doe">
@@ -161,25 +160,35 @@
         </div>
 
         <!-- Step 2: Doctor Selection -->
-        <div class="doctor-list" id="doctorList">
+        <div class="doctor-list" id="doctorList" style="display:none;">
             <div class="doctor-option" onclick="selectDoctor('Dr. Sarab Brown')">Dr. Sarab Brown</div>
             <div class="doctor-option" onclick="selectDoctor('Dr. Nate')">Dr. Nate</div>
             <div class="doctor-option" onclick="selectDoctor('Dr. Sarab')">Dr. Sarab</div>
         </div>
 
         <!-- Step 3: Calendar & Time -->
-        <div id="calendar">
+        <div id="calendar" style="display:none;">
             <h3 id="selectedDoctor">Select a Date (May 2025)</h3>
             <div class="horizontal-scroll" id="dateScroll"></div>
             <div class="time-slots" id="timeSlots"></div>
-            <button class="next-button" id="finalNextBtn" onclick="booking_done()">Done</button>
+            <button class="next-button" id="finalNextBtn" onclick="booking_done()" style="display:none;">Done</button>
+        </div>
+
+        <!-- Step 4: Booking Summary -->
+        <div id="bookingSummary"
+            style="display:none; margin-top:20px; padding:15px; background:#e7f4ff; border-radius:10px;">
+            <h3>Booking Done details are</h3>
+            <p><strong>Name:</strong> <span id="summaryName"></span></p>
+            <p><strong>Date of Birth:</strong> <span id="summaryDob"></span></p>
+            <p><strong>Email:</strong> <span id="summaryEmail"></span></p>
+            <p><strong>Reason:</strong> <span id="summaryReason"></span></p>
+            <p><strong>Doctor:</strong> <span id="summaryDoctor"></span></p>
+            <p><strong>Date:</strong> <span id="summaryDate"></span></p>
+            <p><strong>Time:</strong> <span id="summaryTime"></span></p>
         </div>
     </div>
 
     <script>
-         function booking_done() {
-        window.location.href = "https://sarab421.github.io/AIAGENTS/booking_done.html";
-    }
         const doctorList = document.getElementById('doctorList');
         const calendar = document.getElementById('calendar');
         const dateScroll = document.getElementById('dateScroll');
@@ -188,21 +197,28 @@
         const selectedDoctorHeading = document.getElementById('selectedDoctor');
         const formStep = document.getElementById('formStep');
 
+        const bookingSummary = document.getElementById('bookingSummary');
+
         const timeSlots = ['14:35', '14:40', '14:45', '14:50', '14:55', '15:00', '15:05', '15:10', '15:15'];
 
         let selectedSlot = null;
+        let selectedDate = null;
+        let selectedDoctor = '';
 
         function showForm() {
             formStep.style.display = 'block';
+            doctorList.style.display = 'none';
+            calendar.style.display = 'none';
+            bookingSummary.style.display = 'none';
         }
 
         function formNext() {
-            // You can add validation here
             formStep.style.display = 'none';
             doctorList.style.display = 'block';
         }
 
         function selectDoctor(name) {
+            selectedDoctor = name;
             selectedDoctorHeading.innerText = `${name} - Select a Date (May 2025)`;
             doctorList.style.display = 'none';
             calendar.style.display = 'block';
@@ -234,13 +250,14 @@
                 div.onclick = () => {
                     document.querySelectorAll('.date').forEach(el => el.classList.remove('selected'));
                     div.classList.add('selected');
-                    renderTimeSlots(d.date);
+                    selectedDate = `${d.day}, May ${d.date}, 2025`;
+                    renderTimeSlots();
                 };
                 dateScroll.appendChild(div);
             });
         }
 
-        function renderTimeSlots(date) {
+        function renderTimeSlots() {
             timeSlotsContainer.innerHTML = '';
             selectedSlot = null;
             finalNextBtn.style.display = 'none';
@@ -258,8 +275,31 @@
                 timeSlotsContainer.appendChild(div);
             });
         }
+
+        function booking_done() {
+                // Collect form data
+                const name = document.getElementById('username').value;
+                const dob = document.getElementById('dob').value;
+                const email = document.getElementById('email').value;
+                const reason = document.getElementById('reason').value;
+
+                // Display in summary
+                document.getElementById('summaryName').innerText = name;
+                document.getElementById('summaryDob').innerText = dob;
+                document.getElementById('summaryEmail').innerText = email;
+                document.getElementById('summaryReason').innerText = reason;
+                document.getElementById('summaryDoctor').innerText = selectedDoctor;
+                document.getElementById('summaryDate').innerText = selectedDate;
+                document.getElementById('summaryTime').innerText = selectedSlot;
+
+                // Hide form
+                calendar.style.display = 'none';
+                bookingSummary.style.display = 'block';
+
+                // ✅ Hide Book Now button
+                document.querySelector('.button').style.display = 'none';
+            }
+
     </script>
 
 </body>
-
-</html>
