@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Doctor Appointment Booking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        .booking-container {
+            max-width: 420px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+        }
+
+        .doctor-list {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .doctor-option {
+            padding: 12px;
+            background: #f0f0f0;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .doctor-option:hover {
+            background: #007bff;
+            color: white;
+        }
+
+        .horizontal-scroll {
+            overflow-x: auto;
+            white-space: nowrap;
+            padding-bottom: 10px;
+            margin-top: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .date {
+            display: inline-block;
+            width: 60px;
+            text-align: center;
+            background: #eee;
+            border-radius: 8px;
+            margin-right: 10px;
+            padding: 8px 5px;
+            cursor: pointer;
+        }
+
+        .date strong {
+            display: block;
+        }
+
+        .date.selected {
+            background: #007bff;
+            color: white;
+        }
+
+        .time-slots {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .slot {
+            padding: 10px 15px;
+            background: #f0f0f0;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .slot.selected {
+            background: #007bff;
+            color: white;
+        }
+
+        .next-button {
+            display: none;
+            margin-top: 20px;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background: #e91e63;
+            color: white;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #calendar {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="booking-container">
+        <button class="button" onclick="showDoctors()">Book Now</button>
+
+        <div class="doctor-list" id="doctorList">
+            <div class="doctor-option" onclick="selectDoctor('Dr. Sarab Brown')">Dr. Sarab Brown</div>
+            <div class="doctor-option" onclick="selectDoctor('Dr. Nate')">Dr. Nate</div>
+            <div class="doctor-option" onclick="selectDoctor('Dr. Sarab')">Dr. Sarab</div>
+        </div>
+
+        <div id="calendar">
+            <h3 id="selectedDoctor">Select a Date (May 2025)</h3>
+            <div class="horizontal-scroll" id="dateScroll"></div>
+
+            <div class="time-slots" id="timeSlots"></div>
+            <button class="next-button" id="nextBtn" onclick="bookingDone()">Next</button>
+        </div>
+    </div>
+
+    <script>
+        const doctorList = document.getElementById('doctorList');
+        const calendar = document.getElementById('calendar');
+        const dateScroll = document.getElementById('dateScroll');
+        const timeSlotsContainer = document.getElementById('timeSlots');
+        const nextBtn = document.getElementById('nextBtn');
+        const selectedDoctorHeading = document.getElementById('selectedDoctor');
+
+        const timeSlots = ['14:35', '14:40', '14:45', '14:50', '14:55', '15:00', '15:05', '15:10', '15:15'];
+
+        let selectedSlot = null;
+
+        function showDoctors() {
+            doctorList.style.display = 'block';
+        }
+
+        function selectDoctor(name) {
+            selectedDoctorHeading.innerText = `${name} - Select a Date (May 2025)`;
+            doctorList.style.display = 'none';
+            calendar.style.display = 'block';
+            renderDates();
+        }
+        function bookingDone() {
+            window.location.href = "mock.html";
+        }
+
+        function generateMayDates() {
+            const mayDates = [];
+            const year = 2025;
+            const month = 4; // May
+            const daysInMonth = 31;
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateObj = new Date(year, month, day);
+                const weekday = dateObj.toLocaleDateString('en-US', { weekday: 'short' });
+                mayDates.push({ day: weekday, date: day });
+            }
+            return mayDates;
+        }
+
+        function renderDates() {
+            const mayDates = generateMayDates();
+            dateScroll.innerHTML = '';
+
+            mayDates.forEach(d => {
+                const div = document.createElement('div');
+                div.className = 'date';
+                div.innerHTML = `<strong>${d.day}</strong>${d.date}`;
+                div.onclick = () => {
+                    document.querySelectorAll('.date').forEach(el => el.classList.remove('selected'));
+                    div.classList.add('selected');
+                    renderTimeSlots(d.date);
+                };
+                dateScroll.appendChild(div);
+            });
+        }
+
+        function renderTimeSlots(date) {
+            timeSlotsContainer.innerHTML = '';
+            selectedSlot = null;
+            nextBtn.style.display = 'none';
+
+            timeSlots.forEach(slot => {
+                const div = document.createElement('div');
+                div.className = 'slot';
+                div.textContent = slot;
+                div.onclick = () => {
+                    document.querySelectorAll('.slot').forEach(el => el.classList.remove('selected'));
+                    div.classList.add('selected');
+                    selectedSlot = slot;
+                    nextBtn.style.display = 'block';
+                };
+                timeSlotsContainer.appendChild(div);
+            });
+        }
+    </script>
+
+</body>
+
+</html>
